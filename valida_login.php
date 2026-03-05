@@ -21,9 +21,9 @@ foreach ($usuarios_app as $usuario) {
 }
 
 if ($usuario_autenticado) {
-    echo ('autenticado');
     $_SESSION['autenticado'] = 'SIM';
+    header('Location: home.php');
 } else {
-    header('Location: index.php?login=erro');
     $_SESSION['autenticado'] = 'NÃO';
+    header('Location: index.php?login=erro');
 }
