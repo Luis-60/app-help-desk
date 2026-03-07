@@ -1,5 +1,7 @@
 <?php
 require_once "validador_acesso.php";
+
+print_r($_SESSION);
 ?>
 
 <html>
@@ -73,11 +75,11 @@ require_once "validador_acesso.php";
 
                   <div class="row mt-5">
                     <div class="col-6">
-                      <button class="btn btn-lg btn-warning btn-block" type="submit">Voltar</button>
+                      <a href="home.php" class="btn btn-lg btn-warning btn-block" type="submit">Voltar</a>
                     </div>
 
                     <div class="col-6">
-                      <button class="btn btn-lg btn-info btn-block" type="submit">Abrir</button>
+                      <button  class="btn btn-lg btn-info btn-block" type="submit">Abrir</button>
                     </div>
                   </div>
                 </form>

@@ -1,7 +1,7 @@
 <?php
-
 session_start();
 $arquivo = fopen('arquivo.txt', 'a');
+print_r($_SESSION);
 
 $titulo = str_replace('#', '', $_POST['titulo']);
 $categoria = str_replace('#', '', $_POST['categoria']);

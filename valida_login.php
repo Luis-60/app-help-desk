@@ -21,8 +21,8 @@ foreach ($usuarios_app as $usuario) {
         $_POST['senha'] == $usuario['senha']
     ) {
         $usuario_autenticado = true;
-        $usuario_id = $user['id'];
-        $usuario_perfil_id = $user['perfil_id'];
+        $usuario_id = $usuario['id'];
+        $usuario_perfil_id = $usuario['perfil_id'];
     }
 }
 

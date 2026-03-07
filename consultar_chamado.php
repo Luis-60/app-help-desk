@@ -3,13 +3,31 @@ require_once "validador_acesso.php";
 ?>
 <?php
 $chamados = array();
+$chamados_passados = array();
+$chamados_dados = array();
 $arquivo = fopen('arquivo.txt', 'r');
 while (!feof($arquivo)) { // testa pelo fim do arquivoA
 
+
   $registro = fgets($arquivo);
   $chamados[] = $registro;
+  foreach ($chamados as $chamado) {
+    $chamado_dados = explode('#', $chamado);
+    
+    if ($_SESSION['perfil_id'] == 2) {
+      if ($_SESSION['id'] != $chamado_dados[0]) {
+        continue;
+      }
+    }
+    if (count($chamado_dados) < 3) {
+      continue;
+    }
+
+    $chamados_passados[] = $chamado_dados;
+  }
 }
 fclose($arquivo);
+
 
 ?>
 <html>
@@ -57,24 +75,12 @@ fclose($arquivo);
           </div>
 
           <div class="card-body">
-            <?php foreach ($chamados as $chamado) { ?>
-            <?php 
-              if($_SESSION['perfil_id'] == 2) {
-                if($_SESSION['id'] != $chamado_dados[0]){
-                  continue;
-                }
-              }
-              $chamado_dados = explode('#', $chamado);
-              if(count($chamado_dados) < 3){
-                continue;
-              }
-             ?>
-
+            <?php foreach ($chamados_passados as $chamado) { ?>
               <div class="card mb-3 bg-light">
                 <div class="card-body">
-                  <h5 class="card-title"><?= $chamado_dados[1] ?></h5>
-                  <h6 class="card-subtitle mb-2 text-muted"><?= $chamado_dados[2] ?></h6>
-                  <p class="card-text"><?= $chamado_dados[3] ?></p>
+                  <h5 class="card-title"><?= $chamado[1] ?></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><?= $chamado[2] ?></h6>
+                  <p class="card-text"><?= $chamado[3] ?></p>
 
                 </div>
               </div>
@@ -82,7 +88,7 @@ fclose($arquivo);
 
             <div class="row mt-5">
               <div class="col-6">
-                <button class="btn btn-lg btn-warning btn-block" type="submit">Voltar</button>
+                <a href="home.php" class="btn btn-lg btn-warning btn-block" type="submit">Voltar</a>
               </div>
             </div>
           </div>
