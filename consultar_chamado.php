@@ -3,7 +3,6 @@ require_once "validador_acesso.php";
 ?>
 <?php
 $chamados = array();
-$chamados_passados = array();
 $chamados_dados = array();
 $arquivo = fopen('arquivo.txt', 'r');
 while (!feof($arquivo)) { // testa pelo fim do arquivoA
@@ -11,19 +10,16 @@ while (!feof($arquivo)) { // testa pelo fim do arquivoA
 
   $registro = fgets($arquivo);
   $chamados[] = $registro;
-  foreach ($chamados as $chamado) {
-    $chamado_dados = explode('#', $chamado);
-    
-    if ($_SESSION['perfil_id'] == 2) {
-      if ($_SESSION['id'] != $chamado_dados[0]) {
-        continue;
-      }
-    }
-    if (count($chamado_dados) < 3) {
-      continue;
-    }
+  $chamado_dados = explode('#', $registro);
 
-    $chamados_passados[] = $chamado_dados;
+  if ($_SESSION['perfil_id'] == 1) {
+    if ($_SESSION['id'] != $chamado_dados[0]) {
+      continue;
+    } else {
+      $chamados[] = $chamado_dados;
+    }
+  } else {
+    $chamados[] = $chamado_dados;
   }
 }
 fclose($arquivo);
@@ -75,12 +71,17 @@ fclose($arquivo);
           </div>
 
           <div class="card-body">
-            <?php foreach ($chamados_passados as $chamado) { ?>
+            <?php foreach ($chamados as $chamado) { ?>
+              <?php
+              $chamado_dados = explode('#', $chamado);
+              if (count($chamado_dados) < 3) {
+                continue;
+              } ?>
               <div class="card mb-3 bg-light">
                 <div class="card-body">
-                  <h5 class="card-title"><?= $chamado[1] ?></h5>
-                  <h6 class="card-subtitle mb-2 text-muted"><?= $chamado[2] ?></h6>
-                  <p class="card-text"><?= $chamado[3] ?></p>
+                  <h5 class="card-title"><?= $chamado_dados[1] ?></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><?= $chamado_dados[2] ?></h6>
+                  <p class="card-text"><?= $chamado_dados[3] ?></p>
 
                 </div>
               </div>
